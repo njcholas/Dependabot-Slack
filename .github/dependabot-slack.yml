@@ -2,7 +2,7 @@ name: Dependabot-Slack
 on:
   pull_request:
   branches:
-    - main
+    - 'dependabot/**'
 
 jobs:
   dependabot_slack:
