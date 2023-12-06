@@ -1,18 +1,19 @@
-on: push
-name: Slack Notification Demo
+name: Dependabot-Slack
+
+on:
+  push:
+    branches:
+      - 'dependabot/**'
+
 jobs:
-  slackNotification:
-    name: Slack Notification
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2
-      env:
-        SLACK_CHANNEL: dependabot-alerts
-        SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
-        SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_MESSAGE: 'Post Content :rocket:'
-        SLACK_TITLE: Post Title
-        SLACK_USERNAME: DependaBot
-        SLACK_WEBHOOK: ${{ secrets.DEPENDABOT_SLACK_SECRET }}
+    dependabot_slack:
+      runs-on: ubuntu-20.04
+      name: Sends a message to Slack when a push is made
+      steps:
+        - name: Send message to Slack API
+          uses: archive/github-actions-slack@v2.0.0
+          id: notify
+          with:
+            slack-bot-user-oauth-access-token: ${{ secrets.DEPENDABOT_SLACK_SECRET }}
+            slack-channel: dependabot-alerts
+            slack-text: New Dependabot PR ${{ github.event.pull_request.html_url }}
