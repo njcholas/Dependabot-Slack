@@ -3,7 +3,7 @@ name: Dependabot-Slack
 on:
   pull_request:
     branches:
-      - 'nicholas**'
+      - nicholas-**
 
 jobs:
   notify_slack_on_pull_request:
