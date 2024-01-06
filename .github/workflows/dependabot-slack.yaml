@@ -9,8 +9,8 @@ jobs:
   get-security-dashboard-metrics:
     runs-on: ubuntu-latest
     steps:
-      - uses: github/actions/get-security-dashboard-metrics@v1
-      - uses: actions/setup-python@v2
+      - uses: get-security-dashboard-metrics@v1
+      - uses: setup-python@v2
         with:
           python-version: 3.8
       - run: |
@@ -54,7 +54,7 @@ jobs:
           ]
 
           slack:
-          channel: '#segurança'
+          channel: '#dependabot-alerts'
           icon_emoji: ':lock:'
           attachments: attachments
           slack_bot_token: ${{ secrets.DEPENDABOT_SLACK_SECRET }}
