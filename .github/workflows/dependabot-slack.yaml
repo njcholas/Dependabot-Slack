@@ -1,60 +1,18 @@
-name: Get security dashboard metrics
-
+name: Get security advisories report
 on:
   pull_request:
     branches:
-      - 'dependabot/**'
-      
+      'depepndabot/**'
 jobs:
-  get-security-dashboard-metrics:
+  get-security-advisories-report:
     runs-on: ubuntu-latest
     steps:
-      - uses: get-security-dashboard-metrics@v1
-      - uses: setup-python@v2
-        with:
-          python-version: 3.8
-      - run: |
-          vulns = get_security_dashboard_metrics()
-          table = []
-          for vulnerability in vulns:
-            table.append({
-              "name": vulnerability.name,
-              "severity": vulnerability.severity,
-              "description": vulnerability.description,
-          })
-
-          attachments = [
-          {
-            "color": "danger",
-            "fields": [
-              {
-                "title": "Vulnerabilidades graves",
-                "value": table[0]
-              }
-            ]
-          },
-          {
-            "color": "warning",
-            "fields": [
-              {
-                "title": "Vulnerabilidades médias",
-                "value": table[1]
-              }
-            ]
-          },
-          {
-            "color": "good",
-            "fields": [
-              {
-                "title": "Vulnerabilidades baixas",
-                "value": table[2]
-              }
-            ]
-          }
-          ]
-
-          slack:
-          channel: '#dependabot-alerts'
-          icon_emoji: ':lock:'
-          attachments: attachments
-          slack_bot_token: ${{ secrets.DEPENDABOT_SLACK_SECRET }}
+      - uses: github/actions/security-advisories-report@v1
+      - name: Print vulnerabilities
+        run: |
+          for advisory in advisories:
+            if advisory.severity == "critical":
+              echo "Vulnerability name: ${advisory.name}"
+              echo "Vulnerability severity: ${advisory.severity}"
+              echo "Vulnerability description: ${advisory.description}"
+              echo "Vulnerability fix instructions: ${advisory.fix_instructions}"
