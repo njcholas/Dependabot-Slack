@@ -7,7 +7,7 @@ on:
 
 jobs:
   notify_slack_on_pull_request:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-20.04s
     name: Sends a message to Slack when a pull request is opened
     steps:
       - name: Send message to Slack API
