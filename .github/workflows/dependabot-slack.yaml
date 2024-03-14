@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # X.X.X - Latest version available at: https://github.com/kunalnagarco/action-cve/releases
-      - uses: kunalnagarco/action-cve@v1.8.1
+      - uses: kunalnagarco/action-cve@v1.12.1
         with:
           token: ${{ secrets.TOKEN_GITHUB }}
           slack_webhook: ${{ secrets.DEPENDABOT_SLACK_SECRET }}
